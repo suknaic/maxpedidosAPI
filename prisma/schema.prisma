@@ -9,3 +9,90 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Usuario {
+  id      String   @id @default(uuid())
+  nome    String
+  email   String   @unique
+  contato String
+  senha   String
+  lanches Lanche[]
+}
+
+model Lanche {
+  id        String    @id @default(uuid())
+  logo      String?
+  nome      String
+  contato   String
+  endereco  Endereco?
+  horarios  Horario[]
+  usuario   Usuario   @relation(fields: [usuarioId], references: [id])
+  usuarioId String
+  cardapio  Cardapio?
+
+  @@index([id])
+}
+
+model Endereco {
+  id          Int     @id @default(autoincrement())
+  logradouro  String
+  numero      String
+  complemento String?
+  cidade      String
+  estado      String
+  cep         String
+
+  lanche   Lanche @relation(fields: [lancheId], references: [id])
+  lancheId String @unique
+
+  @@index([id])
+}
+
+model Horario {
+  id         String   @id @default(uuid())
+  diaSemana  String
+  disponivel Boolean
+  horaAbre   DateTime
+  horaFecha  DateTime
+
+  lanche   Lanche @relation(fields: [lancheId], references: [id])
+  lancheId String @unique
+}
+
+model Cardapio {
+  id         String      @id @default(uuid())
+  categorias Categoria[]
+
+  lanche   Lanche @relation(fields: [lancheId], references: [id])
+  lancheId String @unique
+}
+
+model Categoria {
+  id    String @id @default(uuid())
+  nome  String
+  items item[]
+
+  Cardapio   Cardapio @relation(fields: [cardapioId], references: [id])
+  cardapioId String
+}
+
+model item {
+  id         String      @id @default(uuid())
+  imagem     String
+  nome       String
+  descricao  String
+  preco      Float
+  adicionais Adicional[]
+
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  categoriaId String    @unique
+}
+
+model Adicional {
+  id    String @id @default(uuid())
+  nome  String
+  valor Float
+
+  item   item   @relation(fields: [itemId], references: [id])
+  itemId String
+}
