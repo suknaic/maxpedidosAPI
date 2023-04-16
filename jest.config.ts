@@ -1,3 +1,10 @@
+// import { pathsToModuleNameMapper } from 'tsconfig-paths-jest';
+// import tsconfig from './tsconfig.json';
+
+// const moduleNameMapper = pathsToModuleNameMapper(
+//   tsconfig.compilerOptions.paths,
+//   { prefix: '<rootDir>/src' },
+// );
 export default {
   moduleFileExtensions: ['js', 'json', 'ts'],
   rootDir: 'src',

@@ -1,6 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { hash } from 'bcrypt';
-import { Hash } from 'crypto';
 import { User } from '../../entities/User';
 import { UserRepository } from '../../repositories/userRepository';
 
@@ -11,7 +10,7 @@ interface IUserRequest {
   senha: string;
 }
 interface ICreateUseResponse {
-  usuario: User;
+  user: User;
 }
 
 @Injectable()
@@ -26,19 +25,19 @@ export class CreateUserService {
   }: IUserRequest): Promise<ICreateUseResponse> {
     const userAlreadyExists = await this.userRepository.findByEmail(email);
 
-    if (userAlreadyExists)
+    if (userAlreadyExists) {
       throw new HttpException('Usuario já existe', HttpStatus.BAD_REQUEST);
-    // codificar a senha
+    }
 
-    const password = await hash(senha, 8);
-    const usuario = new User({
+    const passwordHashed = await hash(senha, 8);
+    const user = new User({
       nome,
       contato,
       email,
-      senha: password,
+      senha: passwordHashed,
     });
 
-    await this.userRepository.create(usuario);
-    return { usuario };
+    await this.userRepository.create(user);
+    return { user };
   }
 }

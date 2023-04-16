@@ -1,15 +1,6 @@
-import { CpfValidator } from 'src/util/cpfValidator';
-import {
-  IsEmail,
-  IsNotEmpty,
-  IsPhoneNumber,
-  IsString,
-  Validate,
-} from 'class-validator';
+import { IsEmail, IsNotEmpty, IsPhoneNumber } from 'class-validator';
 
 export class userDTO {
-  id?: string;
-
   @IsNotEmpty({ message: 'nome nao pode ser vazio' })
   nome: string;
 
