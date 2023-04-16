@@ -5,20 +5,30 @@ import { PrismaUserMapper } from '../mappers/prisma-user-mapper';
 import { PrismaService } from '../prisma.service';
 
 @Injectable()
-export class prismaUserRepository implements UserRepository {
+export class PrismaUserRepository implements UserRepository {
   constructor(private prismaService: PrismaService) {}
 
-  async create(user: User): Promise<void> {
+  async create(user: User): Promise<User> {
     const raw = PrismaUserMapper.toPrisma(user);
-    await this.prismaService.usuario.create({
+    const userCreated = await this.prismaService.usuario.create({
       data: raw,
     });
+
+    return userCreated as User;
   }
 
   async findByEmail(email: string): Promise<User> {
     const user = await this.prismaService.usuario.findFirst({
       where: { email },
     });
-    return user ? new User(user) : (user as User);
+    return user as User;
+  }
+
+  async findById(id: string): Promise<User> {
+    const user = await this.prismaService.usuario.findFirst({
+      where: { id },
+    });
+
+    return user as User;
   }
 }

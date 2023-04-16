@@ -30,14 +30,14 @@ export class CreateUserService {
     }
 
     const passwordHashed = await hash(senha, 8);
-    const user = new User({
+    const makeUser = new User({
       nome,
       contato,
       email,
       senha: passwordHashed,
     });
 
-    await this.userRepository.create(user);
+    const user = await this.userRepository.create(makeUser);
     return { user };
   }
 }

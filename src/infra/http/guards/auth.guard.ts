@@ -10,6 +10,10 @@ import { Request } from 'express';
 import { jwtConstants } from 'src/infra/config/auth';
 import { IS_PUBLIC_KEY } from './decorator/auth.decorator';
 
+interface IPayload {
+  sub: string;
+}
+
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(private jwtService: JwtService, private reflector: Reflector) {}
@@ -30,11 +34,12 @@ export class AuthGuard implements CanActivate {
     if (!token) throw new UnauthorizedException('Token missing');
 
     try {
-      const payload = await this.jwtService.verifyAsync(token, {
+      const { sub } = (await this.jwtService.verifyAsync(token, {
         secret: jwtConstants.secret,
-      });
-
-      request.user = payload;
+      })) as IPayload;
+      request.user = {
+        id: sub,
+      };
     } catch {
       throw new UnauthorizedException('Token invalid!');
     }

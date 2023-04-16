@@ -1,17 +1,17 @@
 import { JwtService } from '@nestjs/jwt';
 import { User } from '../../entities/User';
-import { UserInMemoryRepository } from '../../repositories/in-memory/userRepositoryInMemory';
+import { UserRepositoryInMemory } from '../../repositories/in-memory/userRepositoryInMemory';
 import { AuthenticateService } from './authenticate.service';
 import * as bcrypt from 'bcrypt';
 import { HttpException } from '@nestjs/common';
 
 describe('[AuthenticateService]', () => {
-  let userInMemoryRepository: UserInMemoryRepository;
+  let userInMemoryRepository: UserRepositoryInMemory;
   let authenticateService: AuthenticateService;
   let jwtService: JwtService;
 
   beforeEach(async () => {
-    userInMemoryRepository = new UserInMemoryRepository();
+    userInMemoryRepository = new UserRepositoryInMemory();
     jwtService = {
       signAsync: jest.fn(async () => 'mockedToken'),
     } as unknown as JwtService;

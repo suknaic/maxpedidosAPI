@@ -1,12 +1,12 @@
-import { UserInMemoryRepository } from '../../repositories/in-memory/userRepositoryInMemory';
+import { UserRepositoryInMemory } from '../../repositories/in-memory/userRepositoryInMemory';
 import { CreateUserService } from './createUser.service';
 
 describe('[CreateUserService]', () => {
-  let userRepositoryInMemory: UserInMemoryRepository;
+  let userRepositoryInMemory: UserRepositoryInMemory;
   let createUserService: CreateUserService;
 
   beforeEach(() => {
-    userRepositoryInMemory = new UserInMemoryRepository();
+    userRepositoryInMemory = new UserRepositoryInMemory();
     createUserService = new CreateUserService(userRepositoryInMemory);
   });
 

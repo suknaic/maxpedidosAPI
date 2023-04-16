@@ -1,7 +1,7 @@
 import { randomUUID } from 'crypto';
 import { Lanche } from './Lanche';
 
-interface UserProps {
+export interface UserProps {
   nome: string;
   email: string;
   contato: string;
@@ -16,6 +16,10 @@ export class User {
   constructor(props: UserProps) {
     this._id = randomUUID();
     this.props = props;
+  }
+
+  public set id(id: string) {
+    this._id;
   }
 
   public get id(): string {
