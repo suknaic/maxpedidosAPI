@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-interface HorarioProps {
+export interface HorarioProps {
   diaSemana: string;
   disponivel: boolean;
   horaAbre: Date;

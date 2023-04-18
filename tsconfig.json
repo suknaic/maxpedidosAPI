@@ -19,7 +19,8 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@usecases/*": ["./src/application/useCases/*"],
-      "@helpers/*": ["src/helpers/*"]
+      "@shared/*": ["./src/infra/shared/*"],
+      "@helpers/*": ["./src/helpers/*"]
     },
     "resolveJsonModule": true
   }

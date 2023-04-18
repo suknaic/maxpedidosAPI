@@ -38,6 +38,7 @@ describe('[CreateLancheService]', () => {
   it('should not able to create a new lanche with userId invalid', async () => {
     expect(async () => {
       await createLancheService.execute({
+        logo: 'logodojoao.jpeg',
         nome: 'lanche do joao',
         contato: '99999999999',
         usuarioId: 'invalidId',
