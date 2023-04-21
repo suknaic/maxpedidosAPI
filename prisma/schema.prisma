@@ -11,24 +11,28 @@ datasource db {
 }
 
 model Usuario {
-  id      String   @id @default(uuid())
+  id      String  @id @default(uuid())
   nome    String
-  email   String   @unique
+  email   String  @unique
   contato String
   senha   String
-  lanches Lanche[]
+  lanche  Lanche?
 }
 
 model Lanche {
-  id        String    @id @default(uuid())
+  id        String   @id @default(uuid())
   logo      String?
   nome      String
   contato   String
-  endereco  Endereco?
-  horarios  Horario[]
-  usuario   Usuario   @relation(fields: [usuarioId], references: [id])
-  usuarioId String
-  cardapio  Cardapio?
+  horaAbre  DateTime
+  horaFecha DateTime
+  diasAbre  String[]
+
+  usuario   Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId String  @unique
+
+  endereco Endereco?
+  cardapio Cardapio?
 
   @@index([id])
 }
@@ -46,17 +50,6 @@ model Endereco {
   lancheId String @unique
 
   @@index([id])
-}
-
-model Horario {
-  id         String   @id @default(uuid())
-  diaSemana  String
-  disponivel Boolean
-  horaAbre   DateTime
-  horaFecha  DateTime
-
-  lanche   Lanche @relation(fields: [lancheId], references: [id])
-  lancheId String @unique
 }
 
 model Cardapio {

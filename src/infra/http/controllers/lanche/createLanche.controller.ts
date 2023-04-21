@@ -10,7 +10,8 @@ export class CreateLancheController {
   @Post('/lanche')
   async create(
     @Req() { user }: Request,
-    @Body() { logo = null, nome, contato }: lancheDTO,
+    @Body()
+    { logo = null, nome, horaAbre, horaFecha, diasAbre, contato }: lancheDTO,
   ) {
     const { id } = user;
 
@@ -18,6 +19,9 @@ export class CreateLancheController {
       logo,
       nome,
       contato,
+      horaAbre,
+      horaFecha,
+      diasAbre,
       usuarioId: id,
     });
   }

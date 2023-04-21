@@ -1,6 +1,6 @@
 import { IDateProvider } from '../model/IDateProvider';
 
-export class DayjsDateProviderMock implements IDateProvider {
+export class DateProviderMock implements IDateProvider {
   convertToUTC(date: Date): string {
     throw new Error('Method not implemented.');
   }

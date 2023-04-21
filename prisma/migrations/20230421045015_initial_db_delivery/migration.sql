@@ -15,6 +15,9 @@ CREATE TABLE "Lanche" (
     "logo" TEXT,
     "nome" TEXT NOT NULL,
     "contato" TEXT NOT NULL,
+    "horaAbre" TEXT NOT NULL,
+    "horaFecha" TEXT NOT NULL,
+    "diasAbre" TEXT[],
     "usuarioId" TEXT NOT NULL,
 
     CONSTRAINT "Lanche_pkey" PRIMARY KEY ("id")
@@ -32,18 +35,6 @@ CREATE TABLE "Endereco" (
     "lancheId" TEXT NOT NULL,
 
     CONSTRAINT "Endereco_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Horario" (
-    "id" TEXT NOT NULL,
-    "diaSemana" TEXT NOT NULL,
-    "disponivel" BOOLEAN NOT NULL,
-    "horaAbre" TIMESTAMP(3) NOT NULL,
-    "horaFecha" TIMESTAMP(3) NOT NULL,
-    "lancheId" TEXT NOT NULL,
-
-    CONSTRAINT "Horario_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -89,6 +80,9 @@ CREATE TABLE "Adicional" (
 CREATE UNIQUE INDEX "Usuario_email_key" ON "Usuario"("email");
 
 -- CreateIndex
+CREATE UNIQUE INDEX "Lanche_usuarioId_key" ON "Lanche"("usuarioId");
+
+-- CreateIndex
 CREATE INDEX "Lanche_id_idx" ON "Lanche"("id");
 
 -- CreateIndex
@@ -96,9 +90,6 @@ CREATE UNIQUE INDEX "Endereco_lancheId_key" ON "Endereco"("lancheId");
 
 -- CreateIndex
 CREATE INDEX "Endereco_id_idx" ON "Endereco"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Horario_lancheId_key" ON "Horario"("lancheId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Cardapio_lancheId_key" ON "Cardapio"("lancheId");
@@ -111,9 +102,6 @@ ALTER TABLE "Lanche" ADD CONSTRAINT "Lanche_usuarioId_fkey" FOREIGN KEY ("usuari
 
 -- AddForeignKey
 ALTER TABLE "Endereco" ADD CONSTRAINT "Endereco_lancheId_fkey" FOREIGN KEY ("lancheId") REFERENCES "Lanche"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Horario" ADD CONSTRAINT "Horario_lancheId_fkey" FOREIGN KEY ("lancheId") REFERENCES "Lanche"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Cardapio" ADD CONSTRAINT "Cardapio_lancheId_fkey" FOREIGN KEY ("lancheId") REFERENCES "Lanche"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

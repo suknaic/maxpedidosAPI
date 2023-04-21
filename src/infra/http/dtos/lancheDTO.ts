@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsPhoneNumber } from 'class-validator';
+import { IsArray, IsNotEmpty, IsPhoneNumber } from 'class-validator';
 
 export class lancheDTO {
   logo?: string;
@@ -9,4 +9,14 @@ export class lancheDTO {
   @IsNotEmpty()
   @IsPhoneNumber('BR', { message: 'Contato invalido!' })
   contato: string;
+
+  @IsNotEmpty()
+  horaAbre: string;
+
+  @IsNotEmpty()
+  horaFecha: string;
+
+  @IsArray()
+  @IsNotEmpty()
+  diasAbre: string[];
 }

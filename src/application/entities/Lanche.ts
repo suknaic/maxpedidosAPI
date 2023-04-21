@@ -1,14 +1,15 @@
 import { randomUUID } from 'crypto';
 import { Endereco } from './Endereco';
-import { Horario } from './Horario';
 import { Cardapio } from './Cardapio';
 
 interface LancheProps {
   nome: string;
   contato: string;
-
+  horaAbre: Date;
+  horaFecha: Date;
+  diasAbre: string[];
   _logo?: string;
-  _horarios?: Horario[];
+
   _endereco?: Endereco;
   _cardapio?: Cardapio;
 
@@ -52,20 +53,26 @@ export class Lanche {
     return this.props.contato;
   }
 
-  public set endereco(endereco: Endereco) {
-    this.props._endereco = endereco;
+  public set horaAbre(horario: Date) {
+    this.props.horaAbre = horario;
   }
 
-  public get endereco(): Endereco {
-    return this.props._endereco ?? ({} as Endereco);
+  public get horaAbre(): Date {
+    return this.props.horaAbre;
   }
 
-  public set horario(horario: Horario) {
-    this.props._horarios?.push(horario);
+  public set horaFecha(horario: Date) {
+    this.props.horaFecha = horario;
+  }
+  public get horaFecha(): Date {
+    return this.props.horaFecha;
   }
 
-  public get horarios(): Horario[] {
-    return this.props._horarios ?? [];
+  public get diasAbre(): string[] {
+    return this.props.diasAbre;
+  }
+  public set diasSemana(dias: string[]) {
+    this.props.diasAbre = dias;
   }
 
   public set usuarioId(id: string) {
@@ -82,5 +89,13 @@ export class Lanche {
 
   public get cardapio(): Cardapio {
     return this.props?._cardapio ?? ({} as Cardapio);
+  }
+
+  public set endereco(endereco: Endereco) {
+    this.props._endereco = endereco;
+  }
+
+  public get endereco(): Endereco {
+    return this.props._endereco ?? ({} as Endereco);
   }
 }

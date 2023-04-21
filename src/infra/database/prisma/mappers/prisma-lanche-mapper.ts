@@ -1,4 +1,4 @@
-import { Lanche } from '@prisma/client';
+import { Lanche } from 'src/application/entities/Lanche';
 
 export class PrismaLancheMapper {
   static toPrisma(lanche: Lanche) {
@@ -7,6 +7,9 @@ export class PrismaLancheMapper {
       logo: lanche.logo,
       nome: lanche.nome,
       contato: lanche.contato,
+      horaAbre: lanche.horaAbre,
+      horaFecha: lanche.horaFecha,
+      diasAbre: lanche.diasAbre,
       usuarioId: lanche.usuarioId,
     };
   }

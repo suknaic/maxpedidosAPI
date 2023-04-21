@@ -1,7 +1,7 @@
-import { Usuario } from '@prisma/client';
+import { User } from 'src/application/entities/User';
 
 export class PrismaUserMapper {
-  static toPrisma(user: Usuario) {
+  static toPrisma(user: User) {
     return {
       nome: user.nome,
       contato: user.contato,

@@ -25,7 +25,6 @@ export class AuthenticateService {
   }: IAuthenticateRequest): Promise<IAuthenticateResponse> {
     const user = await this.userRepository.findByEmail(email);
 
-    console.log('[AuthenticateService]', user);
     if (!user) {
       throw new UnauthorizedException(
         'Ops, não encontramos seu email ou senha.',
