@@ -17,7 +17,6 @@ describe('[CreateUserService]', () => {
       email: 'suknaic@email.com',
       senha: '12345',
     });
-    console.log(user);
 
     expect(userRepositoryInMemory.repository).toHaveLength(1);
     expect(userRepositoryInMemory.repository[0]).toEqual(user);

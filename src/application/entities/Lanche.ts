@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import { Endereco } from './Endereco';
 import { Cardapio } from './Cardapio';
 
-interface LancheProps {
+export interface LancheProps {
   nome: string;
   contato: string;
   horaAbre: Date;

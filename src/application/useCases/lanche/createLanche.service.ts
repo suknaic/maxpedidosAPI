@@ -3,7 +3,6 @@ import { UserRepository } from '../../repositories/userRepository';
 import { Lanche } from '../../entities/Lanche';
 import { LancheRepository } from '../../repositories/lancheRepository';
 import { IDateProvider } from '@shared/providers/DateProvider/model/IDateProvider';
-import { exit } from 'process';
 
 interface ILancheRequest {
   logo?: string | null;

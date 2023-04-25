@@ -16,4 +16,12 @@ export class LancheRepositoryInMemory implements LancheRepository {
     const lanche = this.repository.find((lanche) => lanche.id === id);
     return lanche;
   }
+
+  async findLanche(userId: string): Promise<Lanche> {
+    const lanche = this.repository.find(
+      (lanche) => lanche.usuarioId === userId,
+    );
+
+    return lanche;
+  }
 }

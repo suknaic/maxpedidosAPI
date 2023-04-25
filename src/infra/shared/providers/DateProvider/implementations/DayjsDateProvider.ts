@@ -11,7 +11,7 @@ export class DayjsDateProvider implements IDateProvider {
 
     if (!timeRegex.test(hours)) {
       throw new Error(
-        'Formato de Hora Errado. Por Favor use o formato "HH:mm".',
+        'Formato da Hora está Errado. Por Favor use o formato "HH:mm".',
       );
     }
 
