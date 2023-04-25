@@ -50,6 +50,8 @@ describe('[createEnderecoService]', () => {
         estado: 'acre',
         logradouro: 'AC',
         numero: '1000',
+        lat: '-19000202',
+        long: '16182929',
         complemento: 'perto do campo',
         userId: 'id-user-invalid',
       });

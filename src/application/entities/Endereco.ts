@@ -7,6 +7,8 @@ interface EnderecoProps {
   cidade: string;
   estado: string;
   cep: string;
+  lat?: string;
+  long?: string;
 
   lancheId: string;
 }
@@ -64,6 +66,18 @@ export class Endereco {
   }
   public get cep(): string {
     return this.props.cep;
+  }
+  public set latitude(latitude: string) {
+    this.props.lat = latitude;
+  }
+  public get latitude(): string {
+    return this.props.lat;
+  }
+  public set longitude(longitude: string) {
+    this.props.long = longitude;
+  }
+  public get longitude(): string {
+    return this.props.long;
   }
 
   public set lancheId(id: string) {

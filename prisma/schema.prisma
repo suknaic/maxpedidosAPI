@@ -45,6 +45,8 @@ model Endereco {
   cidade      String
   estado      String
   cep         String
+  lat         String?
+  long        String?
 
   lanche   Lanche @relation(fields: [lancheId], references: [id])
   lancheId String @unique

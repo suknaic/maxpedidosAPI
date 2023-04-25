@@ -7,7 +7,7 @@ import { lancheDTO } from '../../dtos/lancheDTO';
 export class CreateLancheController {
   constructor(private lancheService: CreateLancheService) {}
 
-  @Post('/lanche')
+  @Post('/cadastro/lanche')
   async create(
     @Req() { user }: Request,
     @Body()

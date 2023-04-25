@@ -8,6 +8,17 @@ import { PrismaService } from '../prisma.service';
 export class PrismaLancheRepository implements LancheRepository {
   constructor(private prismaService: PrismaService) {}
 
+  async findLancheByUserId(userId: string): Promise<Lanche> {
+    const lanche = await this.prismaService.lanche.findFirst({
+      where: { usuarioId: userId },
+      select: {
+        id: true,
+      },
+    });
+
+    return lanche as Lanche;
+  }
+
   async create(lanche: Lanche): Promise<void> {
     const raw = PrismaLancheMapper.toPrisma(lanche);
     await this.prismaService.lanche.create({

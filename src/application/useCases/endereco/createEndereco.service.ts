@@ -10,6 +10,8 @@ type IEnderecoRequest = {
   cidade: string;
   estado: string;
   cep: string;
+  lat?: string;
+  long?: string;
 
   userId: string;
 };
@@ -30,7 +32,7 @@ export class CreateEnderecoService {
     cep,
     userId,
   }: IEnderecoRequest) {
-    const lanche = await this.lancheRepository.findLanche(userId);
+    const lanche = await this.lancheRepository.findLancheByUserId(userId);
 
     if (!lanche) {
       throw new HttpException('lanche Não encontrado', HttpStatus.BAD_REQUEST);
