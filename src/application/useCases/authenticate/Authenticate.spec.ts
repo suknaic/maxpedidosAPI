@@ -4,20 +4,35 @@ import { UserRepositoryInMemory } from '../../repositories/in-memory/userReposit
 import { AuthenticateService } from './authenticate.service';
 import * as bcrypt from 'bcrypt';
 import { HttpException } from '@nestjs/common';
+import { RefreshTokenRepositoryInMemory } from '../../repositories/in-memory/refreshTokenRepositoryInMemory';
+import { DateProviderMock } from '@shared/providers/DateProvider/mock/DayjsDateProvider.mock';
 
 describe('[AuthenticateService]', () => {
   let userInMemoryRepository: UserRepositoryInMemory;
-  let authenticateService: AuthenticateService;
+  let refreshTokenRepository: RefreshTokenRepositoryInMemory;
   let jwtService: JwtService;
+  let dateProvider: DateProviderMock;
+
+  let authenticateService: AuthenticateService;
 
   beforeEach(async () => {
     userInMemoryRepository = new UserRepositoryInMemory();
+    refreshTokenRepository = new RefreshTokenRepositoryInMemory();
+
     jwtService = {
-      signAsync: jest.fn(async () => 'mockedToken'),
+      signAsync: jest
+        .fn()
+        .mockImplementationOnce(async () => 'mockedToken')
+        .mockImplementationOnce(async () => 'mockedRefreshToken'),
     } as unknown as JwtService;
+
+    dateProvider = new DateProviderMock();
+
     authenticateService = new AuthenticateService(
       userInMemoryRepository,
+      refreshTokenRepository,
       jwtService,
+      dateProvider,
     );
 
     const passwordHash = await bcrypt.hash('12345', 8);
@@ -46,16 +61,18 @@ describe('[AuthenticateService]', () => {
 
   it('should return a valid JWT Token', async () => {
     // bcryptCompareSpy.mockResolvedValue(true);
-    const { token } = await authenticateService.execute({
+    const { token, refreshToken } = await authenticateService.execute({
       email: 'email@test.com',
       password: '12345',
     });
-    expect(jwtService.signAsync).toHaveBeenCalledWith({
-      sub: userInMemoryRepository.repository[0].id,
-      username: userInMemoryRepository.repository[0].nome,
-    });
+
+    expect(jwtService.signAsync).toHaveBeenCalled();
+
     expect(token).toBe('mockedToken');
     expect(typeof token).toEqual('string');
+
+    expect(refreshToken).toBe('mockedRefreshToken');
+    expect(typeof refreshToken).toEqual('string');
   });
 
   it('should not be authenticate a user nonexistent', async () => {

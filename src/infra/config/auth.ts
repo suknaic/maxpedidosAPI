@@ -1,4 +1,7 @@
 export const jwtConstants = {
-  secret: '7cbc589dc199f18846e0452d74a46931cf5a4d4b51d70bbb604cbf5ec8f14bb8',
-  expires_in_token: '15min',
+  secret_token: 'c453fdd625d2184fea5f2a838924c0d1',
+  secret_refreshtoken: '85bd6f4c5e2394c57c4b365c25e0e68302fac5b6',
+  expires_in_token: '20s',
+  expires_in_refreshToken: '3d',
+  expires_refreshToken_day: 3,
 };

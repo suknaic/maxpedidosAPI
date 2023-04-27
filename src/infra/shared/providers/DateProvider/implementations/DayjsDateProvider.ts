@@ -1,11 +1,25 @@
 import * as dayjs from 'dayjs';
-import utc from 'dayjs/plugin/utc';
 import { IDateProvider } from '../model/IDateProvider';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
 
 export class DayjsDateProvider implements IDateProvider {
-  convertToUTC(date: Date): string {
-    return dayjs(date).utc().local().format('HH:mm');
+  constructor() {
+    dayjs.extend(utc);
+    dayjs.extend(timezone);
   }
+
+  dateIsValid(number: number): boolean {
+    return dayjs().isAfter(dayjs.unix(number));
+  }
+  expiresInDay(number: number): number {
+    return dayjs().add(number, 'd').unix();
+  }
+
+  convertToUTC(date: Date): string {
+    return dayjs(date).utc().local().tz('America/Rio_Branco').format('HH:mm');
+  }
+
   addHours(hours: string): Date {
     const timeRegex = /^([01][0-9]|2[0-3]):[0-5][0-9]$/; // regex para validar o formato 'HH:mm'
 

@@ -10,13 +10,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model RefreshToken {
+  id           String  @id @default(uuid())
+  refreshToken String
+  expiresIn    Int
+  usuario      Usuario @relation(fields: [usuarioId], references: [id])
+  usuarioId    String  @unique
+}
+
 model Usuario {
-  id      String  @id @default(uuid())
-  nome    String
-  email   String  @unique
-  contato String
-  senha   String
-  lanche  Lanche?
+  id           String        @id @default(uuid())
+  nome         String
+  email        String        @unique
+  contato      String
+  senha        String
+  lanche       Lanche?
+  RefreshToken RefreshToken?
 }
 
 model Lanche {

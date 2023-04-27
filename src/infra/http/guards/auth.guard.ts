@@ -9,6 +9,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { jwtConstants } from 'src/infra/config/auth';
 import { IS_PUBLIC_KEY } from './decorator/auth.decorator';
+import { RefreshTokenRepository } from 'src/application/repositories/RefreshTokenRepository';
 
 interface IPayload {
   sub: string;
@@ -30,13 +31,15 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
+    console.log(token);
 
     if (!token) throw new UnauthorizedException('Token missing');
 
     try {
       const { sub } = (await this.jwtService.verifyAsync(token, {
-        secret: jwtConstants.secret,
+        secret: jwtConstants.secret_token,
       })) as IPayload;
+
       request.user = {
         id: sub,
       };
