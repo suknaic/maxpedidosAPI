@@ -3,7 +3,7 @@ import { User } from '../../entities/User';
 import { UserRepositoryInMemory } from '../../repositories/in-memory/userRepositoryInMemory';
 import { AuthenticateService } from './authenticate.service';
 import * as bcrypt from 'bcrypt';
-import { HttpException } from '@nestjs/common';
+import { UnauthorizedException } from '@nestjs/common';
 import { RefreshTokenRepositoryInMemory } from '../../repositories/in-memory/refreshTokenRepositoryInMemory';
 import { DateProviderMock } from '@shared/providers/DateProvider/mock/DayjsDateProvider.mock';
 
@@ -50,7 +50,7 @@ describe('[AuthenticateService]', () => {
     // bcryptCompareSpy.mockRestore();
   });
 
-  it('should verify if password match', async () => {
+  it('should be able to compare password', async () => {
     const bcryptCompareSpy = jest.spyOn(bcrypt, 'compare');
     await authenticateService.execute({
       email: 'email@test.com',
@@ -59,8 +59,25 @@ describe('[AuthenticateService]', () => {
     expect(bcryptCompareSpy).toHaveBeenCalled();
   });
 
+  it('should be able to verify if password match', async () => {
+    expect(async () => {
+      await authenticateService.execute({
+        email: 'email@test.com',
+        password: '12345',
+      });
+    }).toBeTruthy();
+  });
+
+  it('should throw an UnauthorizedException if the password is incorrect', async () => {
+    expect(async () => {
+      await authenticateService.execute({
+        email: 'email@test.com',
+        password: 'invalid-password',
+      });
+    }).rejects.toThrow(UnauthorizedException);
+  });
+
   it('should return a valid JWT Token', async () => {
-    // bcryptCompareSpy.mockResolvedValue(true);
     const { token, refreshToken } = await authenticateService.execute({
       email: 'email@test.com',
       password: '12345',
@@ -81,14 +98,6 @@ describe('[AuthenticateService]', () => {
         email: 'FailEmail@test.com',
         password: '12345',
       });
-    }).rejects.toBeInstanceOf(HttpException);
-  });
-  it('should not be authenticate a user with password incorrect', async () => {
-    expect(async () => {
-      await authenticateService.execute({
-        email: 'email@test.com',
-        password: 'invalid-password',
-      });
-    }).rejects.toBeInstanceOf(HttpException);
+    }).rejects.toBeInstanceOf(UnauthorizedException);
   });
 });
