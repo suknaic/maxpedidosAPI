@@ -20,10 +20,8 @@ describe('[AuthenticateService]', () => {
     refreshTokenRepository = new RefreshTokenRepositoryInMemory();
 
     jwtService = {
-      signAsync: jest
-        .fn()
-        .mockImplementationOnce(async () => 'mockedToken')
-        .mockImplementationOnce(async () => 'mockedRefreshToken'),
+      generateToken: jest.fn(async () => 'mockedToken'),
+      signAsync: jest.fn(async () => 'mockedToken'),
     } as unknown as JwtService;
 
     dateProvider = new DateProviderMock();

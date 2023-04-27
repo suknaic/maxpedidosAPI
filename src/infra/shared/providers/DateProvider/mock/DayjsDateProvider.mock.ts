@@ -1,6 +1,9 @@
 import { IDateProvider } from '../model/IDateProvider';
 
 export class DateProviderMock implements IDateProvider {
+  expiresInHours(number: number): number {
+    throw new Error('Method not implemented.');
+  }
   expiresInDay(number: number): number {
     return new Date().setDate(new Date().getDate() + number);
   }

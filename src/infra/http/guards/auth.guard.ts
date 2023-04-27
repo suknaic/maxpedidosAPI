@@ -5,19 +5,16 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
-import { jwtConstants } from 'src/infra/config/auth';
 import { IS_PUBLIC_KEY } from './decorator/auth.decorator';
-import { RefreshTokenRepository } from 'src/application/repositories/RefreshTokenRepository';
-
-interface IPayload {
-  sub: string;
-}
+import { ITokensProvider } from '@shared/providers/JwtProvider/model/generateTokensProvider';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private jwtService: JwtService, private reflector: Reflector) {}
+  constructor(
+    private jwtService: ITokensProvider,
+    private reflector: Reflector,
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const isPublic = this.reflector.getAllAndOverride(IS_PUBLIC_KEY, [
@@ -31,14 +28,11 @@ export class AuthGuard implements CanActivate {
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    console.log(token);
 
     if (!token) throw new UnauthorizedException('Token missing');
 
     try {
-      const { sub } = (await this.jwtService.verifyAsync(token, {
-        secret: jwtConstants.secret_token,
-      })) as IPayload;
+      const sub = await this.jwtService.verifyToken(token);
 
       request.user = {
         id: sub,

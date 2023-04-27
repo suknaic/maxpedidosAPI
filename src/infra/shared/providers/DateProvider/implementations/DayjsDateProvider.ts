@@ -5,8 +5,8 @@ import timezone from 'dayjs/plugin/timezone';
 
 export class DayjsDateProvider implements IDateProvider {
   constructor() {
-    dayjs.extend(utc);
-    dayjs.extend(timezone);
+    // dayjs.extend(utc);
+    // dayjs.extend(timezone);
   }
 
   dateIsValid(number: number): boolean {
@@ -14,6 +14,9 @@ export class DayjsDateProvider implements IDateProvider {
   }
   expiresInDay(number: number): number {
     return dayjs().add(number, 'd').unix();
+  }
+  expiresInHours(hour: number): number {
+    return dayjs().add(hour, 'hour').unix();
   }
 
   convertToUTC(date: Date): string {

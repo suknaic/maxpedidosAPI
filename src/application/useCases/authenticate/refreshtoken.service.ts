@@ -1,8 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { RefreshTokenRepository } from '../../repositories/RefreshTokenRepository';
 import { IDateProvider } from '@shared/providers/DateProvider/model/IDateProvider';
-import { JwtService } from '@nestjs/jwt';
-import { jwtConstants } from 'src/infra/config/auth';
+import { ITokensProvider } from '@shared/providers/JwtProvider/model/generateTokensProvider';
 
 interface IRefreshTokenResponse {
   token: string;
@@ -12,21 +11,18 @@ interface IRefreshTokenResponse {
 @Injectable()
 export class RefreshTokenService {
   constructor(
-    private refreshTokenRepository: RefreshTokenRepository,
-    private jwtService: JwtService,
+    private tokenRepository: RefreshTokenRepository,
+    private jwtService: ITokensProvider,
     private dateProvider: IDateProvider,
   ) {}
 
-  async execute(refreshToken: string): Promise<IRefreshTokenResponse> {
-    const { email, sub } = await this.jwtService.verifyAsync(refreshToken, {
-      secret: jwtConstants.secret_refreshtoken,
-    });
+  async execute(refresh_token: string): Promise<IRefreshTokenResponse> {
+    const { email, sub } = await this.jwtService.verifyRefreshToken(
+      refresh_token,
+    );
 
     const userRefreshToken =
-      await this.refreshTokenRepository.findUserIdAndRefreshToken(
-        sub,
-        refreshToken,
-      );
+      await this.tokenRepository.findUserIdAndRefreshToken(sub, refresh_token);
 
     if (!userRefreshToken) {
       throw new UnauthorizedException('token does not exists');
@@ -37,37 +33,21 @@ export class RefreshTokenService {
     );
 
     if (refreshTokenExpired) {
-      await this.refreshTokenRepository.deleteById(userRefreshToken.id);
+      await this.tokenRepository.deleteById(userRefreshToken.id);
       throw new UnauthorizedException('token Expired');
     }
 
     // cria o token de acesso
-    const token = this.jwtService.sign(
-      {},
-      {
-        subject: `${sub}`,
-        secret: jwtConstants.secret_token,
-        expiresIn: jwtConstants.expires_in_token,
-      },
-    );
+    const token = await this.jwtService.generateToken(sub);
 
     //cria o token de atualização
-    await this.refreshTokenRepository.deleteById(userRefreshToken.id);
-    const refresh_token = await this.jwtService.signAsync(
-      { email },
-      {
-        subject: `${sub}`,
-        secret: jwtConstants.secret_refreshtoken,
-        expiresIn: jwtConstants.expires_in_refreshToken,
-      },
-    );
-    const expires_date = this.dateProvider.expiresInDay(
-      jwtConstants.expires_refreshToken_day,
-    );
-    await this.refreshTokenRepository.create({
-      usuarioId: `${sub}`,
-      refreshToken: refresh_token,
-      expiresIn: expires_date,
+    await this.tokenRepository.deleteById(userRefreshToken.id);
+    const { usuarioId, refreshToken, expiresIn } =
+      await this.jwtService.generateRefreshToken({ email, usuarioId: sub });
+    await this.tokenRepository.create({
+      usuarioId,
+      refreshToken,
+      expiresIn,
     });
 
     // retorna os tokens

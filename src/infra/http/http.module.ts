@@ -4,10 +4,10 @@ import { authModule } from './controllers/authenticate/authenticate.module';
 import { lancheModule } from './controllers/lanche/lanche.module';
 import { userModule } from './controllers/user/user.module';
 import { AuthGuard } from './guards/auth.guard';
-import { databaseModule } from '../database/database.module';
+import { providerModule } from '@shared/providers/providers.module';
 
 @Module({
-  imports: [databaseModule, authModule, userModule, lancheModule],
+  imports: [providerModule, authModule, userModule, lancheModule],
   providers: [
     {
       provide: APP_GUARD,
