@@ -42,7 +42,3 @@ export class DateProviderMock implements IDateProvider {
     return date;
   }
 }
-
-const dateProvider = new DateProviderMock();
-
-console.log(dateProvider.expiresInDay(5));
