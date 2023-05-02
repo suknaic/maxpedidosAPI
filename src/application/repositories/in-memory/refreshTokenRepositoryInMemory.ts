@@ -48,12 +48,6 @@ export class RefreshTokenRepositoryInMemory implements RefreshTokenRepository {
     );
   }
   async deleteById(id: string): Promise<void> {
-    const indexToDelete = this.repository.findIndex(
-      (refresh) => refresh.id === id,
-    );
-
-    if (indexToDelete !== -1) {
-      this.repository.slice(indexToDelete, 1);
-    }
+    this.repository = this.repository.filter((refresh) => refresh.id !== id);
   }
 }

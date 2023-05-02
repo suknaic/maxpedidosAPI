@@ -1,5 +1,4 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { compare } from 'bcrypt';
 import { UserRepository } from '../../repositories/userRepository';
 import { RefreshTokenRepository } from '../../repositories/RefreshTokenRepository';

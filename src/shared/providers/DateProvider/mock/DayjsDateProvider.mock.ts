@@ -2,16 +2,16 @@ import { IDateProvider } from '../model/IDateProvider';
 
 export class DateProviderMock implements IDateProvider {
   expiresInHours(number: number): number {
-    throw new Error('Method not implemented.');
+    return new Date().setHours(new Date().getHours() + number);
   }
   expiresInDay(number: number): number {
     return new Date().setDate(new Date().getDate() + number);
   }
   dateIsValid(number: number): boolean {
-    const dateToCompare = new Date(number * 1000);
     const currentDate = new Date();
+    const dateToCompare = new Date(number);
 
-    if (dateToCompare >= currentDate) {
+    if (dateToCompare <= currentDate) {
       return true;
     } else {
       return false;

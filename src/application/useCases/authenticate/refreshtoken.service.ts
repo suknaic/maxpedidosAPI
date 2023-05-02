@@ -3,10 +3,10 @@ import { RefreshTokenRepository } from '../../repositories/RefreshTokenRepositor
 import { IDateProvider } from '@shared/providers/DateProvider/model/IDateProvider';
 import { ITokensProvider } from '@shared/providers/JwtProvider/model/generateTokensProvider';
 
-interface IRefreshTokenResponse {
+type IRefreshTokenResponse = {
   token: string;
   refresh_token: string;
-}
+};
 
 @Injectable()
 export class RefreshTokenService {
@@ -42,8 +42,10 @@ export class RefreshTokenService {
 
     //cria o token de atualização
     await this.tokenRepository.deleteById(userRefreshToken.id);
+
     const { usuarioId, refreshToken, expiresIn } =
       await this.jwtService.generateRefreshToken({ email, usuarioId: sub });
+
     await this.tokenRepository.create({
       usuarioId,
       refreshToken,

@@ -20,7 +20,7 @@
     "moduleResolution": "node",
     "paths": {
       "@usecases/*": ["./src/application/useCases/*"],
-      "@shared/*": ["./src/infra/shared/*"],
+      "@shared/*": ["./src/shared/*"],
       "@helpers/*": ["./src/helpers/*"]
     },
     "resolveJsonModule": true

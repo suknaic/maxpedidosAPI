@@ -1,17 +1,15 @@
-import { JwtService } from '@nestjs/jwt';
 import { User } from '../../entities/User';
 import { UserRepositoryInMemory } from '../../repositories/in-memory/userRepositoryInMemory';
 import { AuthenticateService } from './authenticate.service';
 import * as bcrypt from 'bcrypt';
 import { UnauthorizedException } from '@nestjs/common';
 import { RefreshTokenRepositoryInMemory } from '../../repositories/in-memory/refreshTokenRepositoryInMemory';
-import { DateProviderMock } from '@shared/providers/DateProvider/mock/DayjsDateProvider.mock';
+import { ITokensProvider } from '@shared/providers/JwtProvider/model/generateTokensProvider';
 
 describe('[AuthenticateService]', () => {
   let userInMemoryRepository: UserRepositoryInMemory;
   let refreshTokenRepository: RefreshTokenRepositoryInMemory;
-  let jwtService: JwtService;
-  let dateProvider: DateProviderMock;
+  let jwtService: ITokensProvider;
 
   let authenticateService: AuthenticateService;
 
@@ -21,16 +19,19 @@ describe('[AuthenticateService]', () => {
 
     jwtService = {
       generateToken: jest.fn(async () => 'mockedToken'),
-      signAsync: jest.fn(async () => 'mockedToken'),
-    } as unknown as JwtService;
-
-    dateProvider = new DateProviderMock();
+      generateRefreshToken: jest.fn(async () => {
+        return {
+          usuarioId: 'id-mocked',
+          refreshToken: 'mockedRefreshToken',
+          expiresIn: 'data-mocked',
+        };
+      }),
+    } as unknown as ITokensProvider;
 
     authenticateService = new AuthenticateService(
       userInMemoryRepository,
       refreshTokenRepository,
       jwtService,
-      dateProvider,
     );
 
     const passwordHash = await bcrypt.hash('12345', 8);
@@ -48,7 +49,7 @@ describe('[AuthenticateService]', () => {
     // bcryptCompareSpy.mockRestore();
   });
 
-  it('should be able to compare password', async () => {
+  it('should trigger function compare ', async () => {
     const bcryptCompareSpy = jest.spyOn(bcrypt, 'compare');
     await authenticateService.execute({
       email: 'email@test.com',
@@ -75,13 +76,14 @@ describe('[AuthenticateService]', () => {
     }).rejects.toThrow(UnauthorizedException);
   });
 
-  it('should return a valid JWT Token', async () => {
+  it('should return a valid JWT Token and refreshToken', async () => {
     const { token, refreshToken } = await authenticateService.execute({
       email: 'email@test.com',
       password: '12345',
     });
 
-    expect(jwtService.signAsync).toHaveBeenCalled();
+    expect(jwtService.generateToken).toHaveBeenCalled();
+    expect(jwtService.generateRefreshToken).toHaveBeenCalled();
 
     expect(token).toBe('mockedToken');
     expect(typeof token).toEqual('string');
