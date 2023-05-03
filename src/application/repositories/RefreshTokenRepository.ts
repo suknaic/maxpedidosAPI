@@ -22,6 +22,8 @@ export abstract class RefreshTokenRepository {
     refreshToken: string,
   ): Promise<RefreshToken>;
 
+  abstract findByRefreshToken(token: string): Promise<RefreshToken>;
+
   abstract deleteById(id: string): Promise<void>;
-  abstract deleteByUserId(id: string): Promise<void>;
+  abstract deleteManyByUserId(id: string): Promise<void>;
 }

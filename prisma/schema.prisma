@@ -15,17 +15,17 @@ model RefreshToken {
   refreshToken String
   expiresIn    Int
   usuario      Usuario @relation(fields: [usuarioId], references: [id])
-  usuarioId    String  @unique
+  usuarioId    String
 }
 
 model Usuario {
-  id           String        @id @default(uuid())
+  id           String         @id @default(uuid())
   nome         String
-  email        String        @unique
+  email        String         @unique
   contato      String
   senha        String
   lanche       Lanche?
-  RefreshToken RefreshToken?
+  RefreshToken RefreshToken[]
 }
 
 model Lanche {

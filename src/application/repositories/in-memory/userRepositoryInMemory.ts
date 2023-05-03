@@ -9,7 +9,13 @@ export class UserRepositoryInMemory implements UserRepository {
   }
 
   async create(user: User): Promise<User> {
-    this.repository.push(user);
+    const userIndex = this.repository.findIndex((u) => u.id === user.id);
+
+    if (userIndex !== -1) {
+      this.repository[userIndex] = user;
+    } else {
+      this.repository.push(user);
+    }
 
     return user;
   }

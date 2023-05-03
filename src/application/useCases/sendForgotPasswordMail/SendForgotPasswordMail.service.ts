@@ -34,7 +34,9 @@ export class SendForgotPasswordMailService {
       __dirname,
       '..',
       '..',
-      'infra',
+      '..',
+      '..',
+      '..',
       'views',
       'email',
       'forgotPassword.hbs',
@@ -42,7 +44,7 @@ export class SendForgotPasswordMailService {
 
     const variables = {
       name: user.nome,
-      link: `${process.env.FORGOT_MAIL_ULR}/${token}`,
+      link: `${process.env.FORGOT_MAIL_URL}${token}`,
     };
 
     await this.mailProvider.sendMail({

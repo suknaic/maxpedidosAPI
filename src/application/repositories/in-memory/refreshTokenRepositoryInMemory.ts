@@ -11,6 +11,14 @@ export class RefreshTokenRepositoryInMemory implements RefreshTokenRepository {
     this.repository = [];
   }
 
+  async findByRefreshToken(token: string): Promise<RefreshToken> {
+    const refreshToken = this.repository.find(
+      (refresh) => refresh.refreshToken === token,
+    );
+
+    return refreshToken;
+  }
+
   async create({
     usuarioId,
     refreshToken,
@@ -34,7 +42,7 @@ export class RefreshTokenRepositoryInMemory implements RefreshTokenRepository {
     id: string,
     refreshToken: string,
   ): Promise<RefreshToken> {
-    const userRefreshToken = await this.repository.find(
+    const userRefreshToken = this.repository.find(
       (refresh) =>
         refresh.usuarioId === id && refresh.refreshToken === refreshToken,
     );
@@ -42,7 +50,7 @@ export class RefreshTokenRepositoryInMemory implements RefreshTokenRepository {
     return userRefreshToken;
   }
 
-  async deleteByUserId(id: string): Promise<void> {
+  async deleteManyByUserId(id: string): Promise<void> {
     this.repository = this.repository.filter(
       (refresh) => refresh.usuarioId !== id,
     );

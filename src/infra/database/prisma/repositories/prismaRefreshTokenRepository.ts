@@ -9,7 +9,7 @@ import {
 @Injectable()
 export class PrismaRefreshTokenRepository implements RefreshTokenRepository {
   constructor(private prismaService: PrismaService) {}
-  async deleteByUserId(id: string): Promise<void> {
+  async deleteManyByUserId(id: string): Promise<void> {
     await this.prismaService.refreshToken.deleteMany({
       where: { usuarioId: id },
     });

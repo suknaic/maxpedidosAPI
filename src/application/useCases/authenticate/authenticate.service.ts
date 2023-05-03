@@ -48,7 +48,7 @@ export class AuthenticateService {
     const token = await this.jwtService.generateToken(user.id);
 
     // cria o token de atualização
-    await this.refresTokenRepository.deleteByUserId(user.id);
+    await this.refresTokenRepository.deleteManyByUserId(user.id);
 
     const { usuarioId, refreshToken, expiresIn } =
       await this.jwtService.generateRefreshToken({

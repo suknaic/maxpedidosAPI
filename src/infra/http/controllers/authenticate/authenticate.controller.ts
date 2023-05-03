@@ -4,12 +4,14 @@ import { Request, Response } from 'express';
 import { signInDTO } from '../../dtos/signInDTO';
 import { Public } from '../../guards/decorator/auth.decorator';
 import { RefreshTokenService } from '@usecases/authenticate/refreshtoken.service';
+import { SendForgotPasswordMailService } from '@usecases/sendForgotPasswordMail/SendForgotPasswordMail.service';
 
 @Controller()
 export class AuthenticateController {
   constructor(
     private authenticateService: AuthenticateService,
     private refreshTokenService: RefreshTokenService,
+    private sendForgotMailPassword: SendForgotPasswordMailService,
   ) {}
   @Public()
   @Post('login')
@@ -27,9 +29,9 @@ export class AuthenticateController {
 
   @Public()
   @Post('refresh-token')
-  async refresh(@Req() request: Request, @Res() response: Response) {
+  async refreshToken(@Req() request: Request, @Res() response: Response) {
     const refreshToken =
-      request.body.refreshToken || request.query.refreshtoken;
+      request.body.refreshToken || request.query.refreshToken;
 
     const { token, refresh_token } = await this.refreshTokenService.execute(
       refreshToken,
