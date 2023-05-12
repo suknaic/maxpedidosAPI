@@ -25,7 +25,6 @@ export class CreateCardapioService {
     const cardapio = new Cardapio({
       lancheId,
     });
-
     await this.cardapioRepository.create(cardapio);
   }
 }
