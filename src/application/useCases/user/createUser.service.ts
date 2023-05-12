@@ -3,15 +3,15 @@ import { hash } from 'bcrypt';
 import { User } from '../../entities/User';
 import { UserRepository } from '../../repositories/userRepository';
 
-interface IUserRequest {
+type IUserRequest = {
   nome: string;
   contato: string;
   email: string;
   senha: string;
-}
-interface ICreateUseResponse {
+};
+type ICreateUseResponse = {
   user: User;
-}
+};
 
 @Injectable()
 export class CreateUserService {

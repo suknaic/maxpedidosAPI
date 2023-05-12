@@ -4,7 +4,7 @@ import { Lanche } from '../../entities/Lanche';
 import { LancheRepository } from '../../repositories/lancheRepository';
 import { IDateProvider } from '@shared/providers/DateProvider/model/IDateProvider';
 
-interface ILancheRequest {
+type ILancheRequest = {
   logo?: string | null;
   nome: string;
   contato: string;
@@ -12,11 +12,11 @@ interface ILancheRequest {
   horaFecha: string;
   diasAbre: string[];
   usuarioId: string;
-}
+};
 
-interface ILancheResponse {
+type ILancheResponse = {
   lanche: Lanche;
-}
+};
 
 @Injectable()
 export class CreateLancheService {

@@ -11,7 +11,6 @@ export class AuthenticateController {
   constructor(
     private authenticateService: AuthenticateService,
     private refreshTokenService: RefreshTokenService,
-    private sendForgotMailPassword: SendForgotPasswordMailService,
   ) {}
   @Public()
   @Post('login')

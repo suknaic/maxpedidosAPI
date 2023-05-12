@@ -4,10 +4,10 @@ import { RefreshTokenRepository } from '../../repositories/RefreshTokenRepositor
 import { UserRepository } from '../../repositories/userRepository';
 import { hash } from 'bcrypt';
 
-interface IResetPasswordRequest {
+type IResetPasswordRequest = {
   password: string;
   token: string;
-}
+};
 
 @Injectable()
 export class ResetPassword {

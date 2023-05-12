@@ -4,15 +4,10 @@ import { databaseModule } from 'src/infra/database/database.module';
 import { AuthenticateController } from './authenticate.controller';
 import { providerModule } from 'src/shared/providers/providers.module';
 import { RefreshTokenService } from '@usecases/authenticate/refreshtoken.service';
-import { SendForgotPasswordMailService } from '@usecases/sendForgotPasswordMail/SendForgotPasswordMail.service';
 
 @Module({
   imports: [databaseModule, providerModule],
   controllers: [AuthenticateController],
-  providers: [
-    AuthenticateService,
-    RefreshTokenService,
-    SendForgotPasswordMailService,
-  ],
+  providers: [AuthenticateService, RefreshTokenService],
 })
 export class authModule {}

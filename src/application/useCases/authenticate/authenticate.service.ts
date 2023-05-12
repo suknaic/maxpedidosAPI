@@ -4,15 +4,15 @@ import { UserRepository } from '../../repositories/userRepository';
 import { RefreshTokenRepository } from '../../repositories/RefreshTokenRepository';
 import { ITokensProvider } from '@shared/providers/JwtProvider/model/generateTokensProvider';
 
-interface IAuthenticateRequest {
+type IAuthenticateRequest = {
   email: string;
   password: string;
-}
+};
 
-interface IAuthenticateResponse {
+type IAuthenticateResponse = {
   token: string;
   refreshToken: string;
-}
+};
 
 @Injectable()
 export class AuthenticateService {

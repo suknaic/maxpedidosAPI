@@ -1,7 +1,5 @@
 import { Body, Controller, Get, HttpCode, Post, Query } from '@nestjs/common';
-import { AuthenticateService } from '@usecases/authenticate/authenticate.service';
 import { Public } from '../../guards/decorator/auth.decorator';
-import { RefreshTokenService } from '@usecases/authenticate/refreshtoken.service';
 import { SendForgotPasswordMailService } from '@usecases/sendForgotPasswordMail/SendForgotPasswordMail.service';
 import { ForgotPasswordDTO } from '../../dtos/forgotPasswordDTO';
 import { ResetPassword } from '@usecases/ResetPassword/ResetPassword.service';
