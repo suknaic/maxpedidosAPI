@@ -1,10 +1,10 @@
 import { randomUUID } from 'crypto';
 import { Categoria } from './Categoria';
 
-interface CardapioProps {
+type CardapioProps = {
   categorias?: Categoria[];
   lancheId: string;
-}
+};
 
 export class Cardapio {
   private _id: string;

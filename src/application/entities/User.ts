@@ -1,13 +1,13 @@
 import { randomUUID } from 'crypto';
 import { Lanche } from './Lanche';
 
-export interface UserProps {
+export type UserProps = {
   nome: string;
   email: string;
   contato: string;
   senha: string;
   lanches?: Lanche[];
-}
+};
 
 export class User {
   private _id: string;

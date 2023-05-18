@@ -1,13 +1,13 @@
 import { randomUUID } from 'crypto';
 
-export interface HorarioProps {
+export type HorarioProps = {
   diaSemana: string;
   disponivel: boolean;
   horaAbre: Date;
   horaFecha: Date;
 
   lancheId: string;
-}
+};
 
 export class Horario {
   private _id: string;

@@ -32,8 +32,6 @@ describe('[ResetPassword]', () => {
 
     userRepository.create(userTest);
 
-    console.log(userRepository.repository);
-
     tokenRepository.create({
       usuarioId: userTest.id,
       refreshToken: 'reset-password-token',

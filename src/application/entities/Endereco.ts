@@ -1,6 +1,6 @@
 import { randomUUID } from 'crypto';
 
-interface EnderecoProps {
+type EnderecoProps = {
   logradouro: string;
   numero: string;
   complemento: string;
@@ -11,7 +11,7 @@ interface EnderecoProps {
   long?: string;
 
   lancheId: string;
-}
+};
 
 export class Endereco {
   private _id: string;

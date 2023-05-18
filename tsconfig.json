@@ -19,6 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "moduleResolution": "node",
     "paths": {
+      "@application/*": ["./src/application/*"],
       "@usecases/*": ["./src/application/useCases/*"],
       "@shared/*": ["./src/shared/*"],
       "@helpers/*": ["./src/helpers/*"]

@@ -15,6 +15,5 @@ export class MailProviderMock implements IMailProvider {
   }: IMailProviderRequest): Promise<void> {
     const message = { to, subject, path, variables };
     this.messages.push(message);
-    console.log(message);
   }
 }

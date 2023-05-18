@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import { Endereco } from './Endereco';
 import { Cardapio } from './Cardapio';
 
-export interface LancheProps {
+export type LancheProps = {
   nome: string;
   contato: string;
   horaAbre: Date;
@@ -14,7 +14,7 @@ export interface LancheProps {
   _cardapio?: Cardapio;
 
   usuarioId: string;
-}
+};
 
 export class Lanche {
   private _id: string;
