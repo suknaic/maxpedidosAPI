@@ -5,7 +5,7 @@ import { ITokensProvider } from '@shared/providers/JwtProvider/model/generateTok
 
 type IRefreshTokenResponse = {
   token: string;
-  refresh_token: string;
+  refreshToken: string;
 };
 
 @Injectable()
@@ -53,6 +53,6 @@ export class RefreshTokenService {
     });
 
     // retorna os tokens
-    return { token, refresh_token };
+    return { token, refreshToken };
   }
 }

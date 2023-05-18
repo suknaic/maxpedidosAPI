@@ -29,16 +29,16 @@ export class AuthenticateController {
   @Public()
   @Post('refresh-token')
   async refreshToken(@Req() request: Request, @Res() response: Response) {
-    const refreshToken =
+    const refresh_token =
       request.body.refreshToken || request.query.refreshToken;
 
-    const { token, refresh_token } = await this.refreshTokenService.execute(
-      refreshToken,
+    const { token, refreshToken } = await this.refreshTokenService.execute(
+      refresh_token,
     );
 
     return response.status(201).json({
       token,
-      refresh_token,
+      refreshToken,
     });
   }
 }

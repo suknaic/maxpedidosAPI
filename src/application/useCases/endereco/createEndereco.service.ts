@@ -31,6 +31,8 @@ export class CreateEnderecoService {
     estado,
     cep,
     userId,
+    lat,
+    long,
   }: IEnderecoRequest) {
     const lanche = await this.lancheRepository.findLancheByUserId(userId);
 
@@ -45,6 +47,8 @@ export class CreateEnderecoService {
       cidade,
       estado,
       cep,
+      lat,
+      long,
       lancheId: lanche.id,
     });
 
