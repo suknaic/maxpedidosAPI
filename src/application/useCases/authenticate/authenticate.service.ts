@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { compare } from 'bcrypt';
-import { UserRepository } from '../../repositories/userRepository';
-import { RefreshTokenRepository } from '../../repositories/RefreshTokenRepository';
+import { UserRepository } from '@application/repositories/userRepository';
+import { RefreshTokenRepository } from '@application/repositories/RefreshTokenRepository';
 import { ITokensProvider } from '@shared/providers/JwtProvider/model/generateTokensProvider';
 
 type IAuthenticateRequest = {

@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { Categoria } from '../../entities/Categoria';
-import { CategoryRepository } from '../../repositories/CategoryRepository';
-import { CardapioRepository } from '../../repositories/CardapioRepository';
+import { Categoria } from '@application/entities/Categoria';
+import { CategoryRepository } from '@application/repositories/CategoryRepository';
+import { CardapioRepository } from '@application/repositories/CardapioRepository';
 
 type CategoryRequest = {
   categoryName: string;

@@ -1,9 +1,9 @@
-import { RefreshTokenRepositoryInMemory } from '../../repositories/in-memory/refreshTokenRepositoryInMemory';
+import { RefreshTokenRepositoryInMemory } from '@application/repositories/in-memory/refreshTokenRepositoryInMemory';
 import { SendForgotPasswordMailService } from './SendForgotPasswordMail.service';
-import { UserRepositoryInMemory } from '../../repositories/in-memory/userRepositoryInMemory';
+import { UserRepositoryInMemory } from '@application/repositories/in-memory/userRepositoryInMemory';
 import { DateProviderMock } from '@shared/providers/DateProvider/mock/DayjsDateProvider.mock';
 import { MailProviderMock } from '@shared/providers/MailProvider/mock/MailProviderMock';
-import { User } from '../../entities/User';
+import { User } from '@application/entities/User';
 import { HttpException } from '@nestjs/common';
 import * as crypto from 'crypto';
 

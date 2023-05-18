@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { hash } from 'bcrypt';
-import { User } from '../../entities/User';
-import { UserRepository } from '../../repositories/userRepository';
+import { User } from '@application/entities/User';
+import { UserRepository } from '@application/repositories/userRepository';
 
 type IUserRequest = {
   nome: string;

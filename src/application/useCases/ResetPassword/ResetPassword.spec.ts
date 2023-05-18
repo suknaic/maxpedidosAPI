@@ -1,8 +1,8 @@
-import { UserRepositoryInMemory } from '../../repositories/in-memory/userRepositoryInMemory';
+import { UserRepositoryInMemory } from '@application/repositories/in-memory/userRepositoryInMemory';
 import { ResetPassword } from './ResetPassword.service';
-import { RefreshTokenRepositoryInMemory } from '../../repositories/in-memory/refreshTokenRepositoryInMemory';
+import { RefreshTokenRepositoryInMemory } from '@application/repositories/in-memory/refreshTokenRepositoryInMemory';
 import { DateProviderMock } from '@shared/providers/DateProvider/mock/DayjsDateProvider.mock';
-import { User } from '../../entities/User';
+import { User } from '@application/entities/User';
 import { fail } from 'assert';
 import { HttpException } from '@nestjs/common';
 

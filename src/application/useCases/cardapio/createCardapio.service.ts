@@ -1,12 +1,7 @@
-import {
-  HttpCode,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common';
-import { CardapioRepository } from '../../repositories/CardapioRepository';
-import { LancheRepository } from '../../repositories/lancheRepository';
-import { Cardapio } from '../../entities/Cardapio';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { CardapioRepository } from '@application/repositories/CardapioRepository';
+import { LancheRepository } from '@application/repositories/lancheRepository';
+import { Cardapio } from '@application/entities/Cardapio';
 
 @Injectable()
 export class CreateCardapioService {

@@ -1,9 +1,9 @@
-import { User } from '../../entities/User';
-import { UserRepositoryInMemory } from '../../repositories/in-memory/userRepositoryInMemory';
+import { User } from '@application/entities/User';
+import { UserRepositoryInMemory } from '@application/repositories/in-memory/userRepositoryInMemory';
 import { AuthenticateService } from './authenticate.service';
 import * as bcrypt from 'bcrypt';
 import { UnauthorizedException } from '@nestjs/common';
-import { RefreshTokenRepositoryInMemory } from '../../repositories/in-memory/refreshTokenRepositoryInMemory';
+import { RefreshTokenRepositoryInMemory } from '@application/repositories/in-memory/refreshTokenRepositoryInMemory';
 import { ITokensProvider } from '@shared/providers/JwtProvider/model/generateTokensProvider';
 
 describe('[AuthenticateService]', () => {

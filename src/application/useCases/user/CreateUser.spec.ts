@@ -1,5 +1,5 @@
 import { HttpException } from '@nestjs/common';
-import { UserRepositoryInMemory } from '../../repositories/in-memory/userRepositoryInMemory';
+import { UserRepositoryInMemory } from '@application/repositories/in-memory/userRepositoryInMemory';
 import { CreateUserService } from './createUser.service';
 
 describe('[CreateUserService]', () => {

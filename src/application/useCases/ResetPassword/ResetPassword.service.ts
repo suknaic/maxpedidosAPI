@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { IDateProvider } from '@shared/providers/DateProvider/model/IDateProvider';
-import { RefreshTokenRepository } from '../../repositories/RefreshTokenRepository';
-import { UserRepository } from '../../repositories/userRepository';
+import { RefreshTokenRepository } from '@application/repositories/RefreshTokenRepository';
+import { UserRepository } from '@application/repositories/userRepository';
 import { hash } from 'bcrypt';
 
 type IResetPasswordRequest = {

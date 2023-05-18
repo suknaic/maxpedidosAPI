@@ -1,7 +1,7 @@
-import { LancheRepositoryInMemory } from '../../repositories/in-memory/lancheRepositoryInMemory';
+import { LancheRepositoryInMemory } from '@application/repositories/in-memory/lancheRepositoryInMemory';
 import { CreateCardapioService } from './createCardapio.service';
-import { CardapioRepositoryInMemory } from '../../repositories/in-memory/cardapioRepositoryInMemory';
-import { makeLanche } from '../../factories/lancheFactory';
+import { CardapioRepositoryInMemory } from '@application/repositories/in-memory/cardapioRepositoryInMemory';
+import { makeLanche } from '@application/factories/lancheFactory';
 import { HttpException } from '@nestjs/common';
 
 describe('[CreateCardapioService]', () => {

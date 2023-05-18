@@ -1,5 +1,5 @@
 import { ITokensProvider } from '@shared/providers/JwtProvider/model/generateTokensProvider';
-import { RefreshTokenRepositoryInMemory } from '../../repositories/in-memory/refreshTokenRepositoryInMemory';
+import { RefreshTokenRepositoryInMemory } from '@application/repositories/in-memory/refreshTokenRepositoryInMemory';
 import { DateProviderMock } from '@shared/providers/DateProvider/mock/DayjsDateProvider.mock';
 import { RefreshTokenService } from './refreshtoken.service';
 import { UnauthorizedException } from '@nestjs/common';

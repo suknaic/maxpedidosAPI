@@ -3,8 +3,8 @@ import { IDateProvider } from '@shared/providers/DateProvider/model/IDateProvide
 import { IMailProvider } from '@shared/providers/MailProvider/model/IMailProvider';
 import { randomUUID } from 'crypto';
 import { resolve } from 'path';
-import { RefreshTokenRepository } from '../../repositories/RefreshTokenRepository';
-import { UserRepository } from '../../repositories/userRepository';
+import { RefreshTokenRepository } from '@application/repositories/RefreshTokenRepository';
+import { UserRepository } from '@application/repositories/userRepository';
 
 @Injectable()
 export class SendForgotPasswordMailService {

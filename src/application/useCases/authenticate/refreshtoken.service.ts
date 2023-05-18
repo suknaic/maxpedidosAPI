@@ -1,5 +1,5 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { RefreshTokenRepository } from '../../repositories/RefreshTokenRepository';
+import { RefreshTokenRepository } from '@application/repositories/RefreshTokenRepository';
 import { IDateProvider } from '@shared/providers/DateProvider/model/IDateProvider';
 import { ITokensProvider } from '@shared/providers/JwtProvider/model/generateTokensProvider';
 
