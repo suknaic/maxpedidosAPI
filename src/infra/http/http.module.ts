@@ -7,6 +7,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { providerModule } from '@shared/providers/providers.module';
 import { PasswordModule } from './controllers/password/password.module';
 import { EnderecoModule } from './controllers/endereco/endereco.module';
+import { CategoryModule } from './controllers/category/category.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { EnderecoModule } from './controllers/endereco/endereco.module';
     userModule,
     EnderecoModule,
     lancheModule,
+    CategoryModule,
   ],
   providers: [
     {

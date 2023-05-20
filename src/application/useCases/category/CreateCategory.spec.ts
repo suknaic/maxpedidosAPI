@@ -1,39 +1,40 @@
-import { CardapioRepositoryInMemory } from '@application/repositories/in-memory/cardapioRepositoryInMemory';
 import { CreateCategory } from './createCategory.service';
 import { CategoryRepositoryInMemory } from '@application/repositories/in-memory/CategoryRepositoryInMemory';
-import { Cardapio } from '@application/entities/Cardapio';
 import { HttpException } from '@nestjs/common';
 import { Categoria } from '@application/entities/Categoria';
+import { LancheRepositoryInMemory } from '@application/repositories/in-memory/lancheRepositoryInMemory';
+import { makeLanche } from '@application/factories/lancheFactory';
+import { Cardapio } from '@application/entities/Cardapio';
 
 describe('[CreateCategoryService]', () => {
   let createCategoryService: CreateCategory;
-  let cardapioRepository: CardapioRepositoryInMemory;
   let categoryRepository: CategoryRepositoryInMemory;
+  let lancheRepository: LancheRepositoryInMemory;
   let cardapioId: string;
 
   beforeEach(() => {
-    cardapioRepository = new CardapioRepositoryInMemory();
+    lancheRepository = new LancheRepositoryInMemory();
     categoryRepository = new CategoryRepositoryInMemory();
 
     createCategoryService = new CreateCategory(
       categoryRepository,
-      cardapioRepository,
+      lancheRepository,
     );
 
+    const lanche = makeLanche({ usuarioId: 'mocked-user-id' });
+    lancheRepository.repository.push(lanche);
     const cardapio = new Cardapio({
-      lancheId: 'fake-lanche-id',
+      lancheId: lanche.id,
     });
-
+    lanche.cardapio = cardapio;
     cardapioId = cardapio.id;
-
-    cardapioRepository.create(cardapio);
   });
 
   it('should be able to create a new category', async () => {
     try {
       await createCategoryService.execute({
-        cardapioId,
         categoryName: 'sanduíches',
+        userId: 'mocked-user-id',
       });
       expect(true).toBe(true);
     } catch (error) {
@@ -42,10 +43,10 @@ describe('[CreateCategoryService]', () => {
     expect(categoryRepository.repository).toHaveLength(1);
   });
 
-  it('should not be able to create a new category without cardapioId valid', () => {
+  it('should not be able to create a new category with userId valid', () => {
     expect(async () => {
       await createCategoryService.execute({
-        cardapioId: 'invalid-id',
+        userId: 'invalid-id',
         categoryName: 'sanduíches',
       });
     }).rejects.toBeInstanceOf(HttpException);
@@ -54,14 +55,14 @@ describe('[CreateCategoryService]', () => {
   it('should not be able to create a new category with some name', () => {
     categoryRepository.repository.push(
       new Categoria({
+        nome: 'sanduíches',
         cardapioId,
-        name: 'sanduíches',
       }),
     );
     expect(async () => {
       await createCategoryService.execute({
-        cardapioId,
         categoryName: 'sanduíches',
+        userId: 'mocked-user-id',
       });
     }).rejects.toBeInstanceOf(HttpException);
   });

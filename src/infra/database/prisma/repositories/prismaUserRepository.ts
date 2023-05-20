@@ -10,21 +10,6 @@ export class PrismaUserRepository implements UserRepository {
 
   async create(user: User): Promise<User> {
     const raw = PrismaUserMapper.toPrisma(user);
-    // const userCreated = await this.prismaService.usuario.upsert({
-    //   where: { id: user.id },
-    //   update: {
-    //     nome: user.nome,
-    //     email: user.email,
-    //     contato: user.contato,
-    //     senha: user.senha,
-    //   },
-    //   create: {
-    //     nome: user.nome,
-    //     email: user.email,
-    //     contato: user.contato,
-    //     senha: user.senha,
-    //   },
-    // });
     const userCreated = await this.prismaService.usuario.create({
       data: raw,
     });

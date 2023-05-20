@@ -1,24 +1,26 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { Categoria } from '@application/entities/Categoria';
 import { CategoryRepository } from '@application/repositories/CategoryRepository';
-import { CardapioRepository } from '@application/repositories/CardapioRepository';
+import { LancheRepository } from '@application/repositories/lancheRepository';
 
 type CategoryRequest = {
   categoryName: string;
-  cardapioId: string;
+  userId: string;
 };
 
 @Injectable()
 export class CreateCategory {
   constructor(
     private categoryRepository: CategoryRepository,
-    private cardapioRepository: CardapioRepository,
+    private lancheRepository: LancheRepository,
   ) {}
 
-  async execute({ categoryName, cardapioId }: CategoryRequest): Promise<void> {
-    const cardapioExists = await this.cardapioRepository.findById(cardapioId);
+  async execute({ categoryName, userId }: CategoryRequest): Promise<void> {
+    const lanche = await this.lancheRepository.findCardapioOfLancheByUserId(
+      userId,
+    );
 
-    if (!cardapioExists) {
+    if (!lanche?.cardapio) {
       throw new HttpException(
         'Cardapio Nao Encontrado',
         HttpStatus.BAD_REQUEST,
@@ -37,8 +39,8 @@ export class CreateCategory {
     }
 
     const category = new Categoria({
-      name: categoryName,
-      cardapioId,
+      nome: categoryName,
+      cardapioId: lanche?.cardapio.id,
     });
 
     await this.categoryRepository.create(category);

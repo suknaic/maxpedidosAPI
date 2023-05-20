@@ -12,8 +12,11 @@ import { PrismaRefreshTokenRepository } from './prisma/repositories/prismaRefres
 
 import { CardapioRepository } from '@application/repositories/CardapioRepository';
 import { PrismaCardapioRepository } from './prisma/repositories/prismaCardapioRepository';
+
 import { EnderecoRepository } from '@application/repositories/enderecoRepository';
 import { PrismaEnderecoRepository } from './prisma/repositories/prismaEnderecoRepository';
+import { CategoryRepository } from '@application/repositories/CategoryRepository';
+import { PrismaCategoryRepository } from './prisma/repositories/prismaCategoryRepository';
 
 @Module({
   providers: [
@@ -38,6 +41,10 @@ import { PrismaEnderecoRepository } from './prisma/repositories/prismaEnderecoRe
       provide: CardapioRepository,
       useClass: PrismaCardapioRepository,
     },
+    {
+      provide: CategoryRepository,
+      useClass: PrismaCategoryRepository,
+    },
   ],
   exports: [
     UserRepository,
@@ -45,6 +52,7 @@ import { PrismaEnderecoRepository } from './prisma/repositories/prismaEnderecoRe
     EnderecoRepository,
     LancheRepository,
     CardapioRepository,
+    CategoryRepository,
   ],
 })
 export class databaseModule {}

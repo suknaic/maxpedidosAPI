@@ -26,6 +26,8 @@ model Usuario {
   senha        String
   lanche       Lanche?
   RefreshToken RefreshToken[]
+
+  @@map("user")
 }
 
 model Lanche {
