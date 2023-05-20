@@ -4,7 +4,6 @@ import { Request, Response } from 'express';
 import { signInDTO } from '../../dtos/signInDTO';
 import { Public } from '../../guards/decorator/auth.decorator';
 import { RefreshTokenService } from '@usecases/authenticate/refreshtoken.service';
-import { SendForgotPasswordMailService } from '@usecases/sendForgotPasswordMail/SendForgotPasswordMail.service';
 
 @Controller()
 export class AuthenticateController {

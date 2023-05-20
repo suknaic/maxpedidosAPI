@@ -12,10 +12,19 @@ export class CategoryRepositoryInMemory implements CategoryRepository {
     this.repository.push(categoria);
   }
 
-  async findByName(categoryName: string): Promise<Categoria> {
+  async findByName({ categoryName, cardapioId }): Promise<Categoria> {
     const categoria = this.repository.find(
-      (category) => category.nome === categoryName,
+      (category) =>
+        category.nome === categoryName && category.cardapioId === cardapioId,
     );
     return categoria;
+  }
+
+  async getAllByUser(cardapioId: string): Promise<Categoria[]> {
+    const categorias = this.repository.filter(
+      (category) => category.cardapioId === cardapioId,
+    );
+
+    return categorias;
   }
 }

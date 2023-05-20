@@ -23,6 +23,10 @@ export class Cardapio {
     this.props.categorias?.push(categoria);
   }
 
+  public set categorias(categorias: Categoria[]) {
+    this.props.categorias = categorias;
+  }
+
   public get categorias(): Categoria[] {
     return this.props.categorias ?? [];
   }

@@ -27,9 +27,10 @@ export class CreateCategory {
       );
     }
 
-    const categoryExists = await this.categoryRepository.findByName(
+    const categoryExists = await this.categoryRepository.findByName({
+      cardapioId: lanche?.cardapio.id,
       categoryName,
-    );
+    });
 
     if (categoryExists) {
       throw new HttpException(
