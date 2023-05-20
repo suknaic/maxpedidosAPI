@@ -11,8 +11,20 @@ export class PrismaLancheRepository implements LancheRepository {
   async findLancheByUserId(userId: string): Promise<Lanche> {
     const lanche = await this.prismaService.lanche.findFirst({
       where: { usuarioId: userId },
+    });
+
+    return lanche as Lanche;
+  }
+
+  async findCardapioOfLancheByUserId(userId: string): Promise<Lanche> {
+    const lanche = await this.prismaService.lanche.findFirst({
+      where: { usuarioId: userId },
       select: {
-        id: true,
+        cardapio: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
 
