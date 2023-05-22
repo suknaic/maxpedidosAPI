@@ -42,12 +42,12 @@ describe('[RefreshTokenService]', () => {
   });
 
   it('should be able to receive valid tokens', async () => {
-    const { token, refresh_token } = await refreshTokenService.execute(
+    const { token, refreshToken } = await refreshTokenService.execute(
       'mockedRefreshToken',
     );
 
-    expect(typeof refresh_token).toBe('string');
-    expect(refresh_token).toBe('mockedRefreshToken');
+    expect(typeof refreshToken).toBe('string');
+    expect(refreshToken).toBe('mockedRefreshToken');
 
     expect(typeof token).toBe('string');
     expect(token).toBe('mockedToken');

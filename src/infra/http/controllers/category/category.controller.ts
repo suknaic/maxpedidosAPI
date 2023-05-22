@@ -3,6 +3,7 @@ import { CreateCategory } from '@application/useCases/category/createCategory.se
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   Param,
@@ -13,18 +14,19 @@ import {
 } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { CategoryDTO } from '../../dtos/categoryDTO';
-import { get } from 'http';
 import { UpdateCategory } from '@application/useCases/category/UpdateCategory.service';
+import { DeleteCategory } from '@application/useCases/category/DeleteCategory.service';
 
-@Controller()
+@Controller('/painel/categorias')
 export class CategoryController {
   constructor(
     private createCategoryService: CreateCategory,
     private listCategoryService: ListCategories,
     private updateCategoryService: UpdateCategory,
+    private deleteCategoryService: DeleteCategory,
   ) {}
 
-  @Post('/painel/categorias')
+  @Post()
   @HttpCode(201)
   async create(@Req() { user }: Request, @Body() { name, icon }: CategoryDTO) {
     const { id } = user;
@@ -34,7 +36,7 @@ export class CategoryController {
       userId: id,
     });
   }
-  @Put('/painel/categorias/:id')
+  @Put(':id')
   async updateCategory(
     @Param('id') id: string,
     @Body() { icon, name }: CategoryDTO,
@@ -49,11 +51,17 @@ export class CategoryController {
     return response.json(category).status(200);
   }
 
-  @Get('/painel/categorias')
+  @Get()
   async getAll(@Req() { user }: Request, @Res() response: Response) {
     const { id } = user;
     const categories = await this.listCategoryService.execute(id);
 
     return response.json(categories).status(200);
+  }
+
+  @HttpCode(201)
+  @Delete(':id')
+  async remove(@Param('id') id: string) {
+    await this.deleteCategoryService.execute(id);
   }
 }

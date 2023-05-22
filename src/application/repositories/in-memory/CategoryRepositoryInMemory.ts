@@ -7,6 +7,9 @@ export class CategoryRepositoryInMemory implements CategoryRepository {
   constructor() {
     this.repository = [];
   }
+  async remove(id: string): Promise<void> {
+    this.repository = this.repository.filter((category) => category.id !== id);
+  }
   async updateCategory({
     categoryId,
     categoryName,

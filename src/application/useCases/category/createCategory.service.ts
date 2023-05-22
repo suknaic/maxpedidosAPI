@@ -32,8 +32,10 @@ export class CreateCategory {
       );
     }
 
+    const cardapioId = lanche.cardapio.id;
+
     const categoryExists = await this.categoryRepository.findByName({
-      cardapioId: lanche?.cardapio.id,
+      cardapioId,
       categoryName,
     });
 
@@ -47,7 +49,7 @@ export class CreateCategory {
     const category = new Categoria({
       nome: categoryName,
       icon: categoryIcon,
-      cardapioId: lanche?.cardapio.id,
+      cardapioId,
     });
 
     await this.categoryRepository.create(category);

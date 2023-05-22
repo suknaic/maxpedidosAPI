@@ -10,6 +10,7 @@ import { PrismaCategoryMapper } from '../mappers/prisma-category-mapper';
 @Injectable()
 export class PrismaCategoryRepository implements CategoryRepository {
   constructor(private prismaService: PrismaService) {}
+
   async updateCategory({
     categoryId,
     categoryIcon,
@@ -50,5 +51,9 @@ export class PrismaCategoryRepository implements CategoryRepository {
     });
 
     return category as Categoria;
+  }
+
+  async remove(id: string): Promise<void> {
+    await this.prismaService.categoria.delete({ where: { id } });
   }
 }

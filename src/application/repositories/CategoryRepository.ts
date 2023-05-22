@@ -22,4 +22,6 @@ export abstract class CategoryRepository {
     categoryIcon,
     categoryName,
   }: updateCategoryProps): Promise<Categoria>;
+
+  abstract remove(id: string): Promise<void>;
 }
