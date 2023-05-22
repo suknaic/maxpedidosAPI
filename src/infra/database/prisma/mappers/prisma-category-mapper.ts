@@ -5,6 +5,7 @@ export class PrismaCategoryMapper {
     return {
       id: category.id,
       nome: category.nome,
+      icon: category.icon,
       cardapioId: category.cardapioId,
     };
   }
