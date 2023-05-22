@@ -28,11 +28,13 @@ describe('[CreateCategoryService]', () => {
 
     const sanduiche = new Categoria({
       cardapioId: cardapio.id,
-      nome: 'sanduiches',
+      icon: 'fa-san',
+      nome: 'sanduíches',
     });
     const hamburguer = new Categoria({
       cardapioId: cardapio.id,
-      nome: 'sanduiches',
+      icon: 'fa-burg',
+      nome: 'hambúrguer',
     });
     categoryRepository.create(sanduiche);
     categoryRepository.create(hamburguer);

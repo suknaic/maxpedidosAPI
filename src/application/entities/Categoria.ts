@@ -3,6 +3,7 @@ import { Item } from './Item';
 
 type CategoryProps = {
   nome: string;
+  icon: string;
   cardapioId: string;
   items?: Item[];
 };
@@ -24,6 +25,13 @@ export class Categoria {
 
   public get nome(): string {
     return this.props.nome;
+  }
+  public set icon(icon: string) {
+    this.props.icon = icon;
+  }
+
+  public get icon(): string {
+    return this.props.icon;
   }
   public set cardapioId(cardapioId: string) {
     this.props.cardapioId = cardapioId;

@@ -4,6 +4,11 @@ type findCategoryProps = {
   categoryName: string;
   cardapioId: string;
 };
+export type updateCategoryProps = {
+  categoryId: string;
+  categoryIcon: string;
+  categoryName: string;
+};
 
 export abstract class CategoryRepository {
   abstract create(category: Categoria): Promise<void>;
@@ -12,4 +17,9 @@ export abstract class CategoryRepository {
     categoryName,
   }: findCategoryProps): Promise<Categoria>;
   abstract getAllByUser(cardapioId: string): Promise<Categoria[]>;
+  abstract updateCategory({
+    categoryId,
+    categoryIcon,
+    categoryName,
+  }: updateCategoryProps): Promise<Categoria>;
 }

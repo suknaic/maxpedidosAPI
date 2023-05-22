@@ -76,6 +76,7 @@ model Cardapio {
 model Categoria {
   id    String @id @default(uuid())
   nome  String
+  icon  String
   items item[]
 
   Cardapio   Cardapio @relation(fields: [cardapioId], references: [id])

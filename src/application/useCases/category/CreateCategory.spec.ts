@@ -34,6 +34,7 @@ describe('[CreateCategoryService]', () => {
     try {
       await createCategoryService.execute({
         categoryName: 'sanduíches',
+        categoryIcon: 'icon-san',
         userId: 'mocked-user-id',
       });
       expect(true).toBe(true);
@@ -47,6 +48,7 @@ describe('[CreateCategoryService]', () => {
     expect(async () => {
       await createCategoryService.execute({
         userId: 'invalid-id',
+        categoryIcon: 'icon-san',
         categoryName: 'sanduíches',
       });
     }).rejects.toBeInstanceOf(HttpException);
@@ -56,12 +58,14 @@ describe('[CreateCategoryService]', () => {
     categoryRepository.repository.push(
       new Categoria({
         nome: 'sanduíches',
+        icon: 'icon-san',
         cardapioId,
       }),
     );
     expect(async () => {
       await createCategoryService.execute({
         categoryName: 'sanduíches',
+        categoryIcon: 'icon-san',
         userId: 'mocked-user-id',
       });
     }).rejects.toBeInstanceOf(HttpException);

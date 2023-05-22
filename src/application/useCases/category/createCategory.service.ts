@@ -5,6 +5,7 @@ import { LancheRepository } from '@application/repositories/lancheRepository';
 
 type CategoryRequest = {
   categoryName: string;
+  categoryIcon: string;
   userId: string;
 };
 
@@ -15,7 +16,11 @@ export class CreateCategory {
     private lancheRepository: LancheRepository,
   ) {}
 
-  async execute({ categoryName, userId }: CategoryRequest): Promise<void> {
+  async execute({
+    categoryName,
+    categoryIcon,
+    userId,
+  }: CategoryRequest): Promise<void> {
     const lanche = await this.lancheRepository.findCardapioOfLancheByUserId(
       userId,
     );
@@ -41,6 +46,7 @@ export class CreateCategory {
 
     const category = new Categoria({
       nome: categoryName,
+      icon: categoryIcon,
       cardapioId: lanche?.cardapio.id,
     });
 
