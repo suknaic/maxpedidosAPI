@@ -4,11 +4,6 @@ import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 
 export class DayjsDateProvider implements IDateProvider {
-  constructor() {
-    // dayjs.extend(utc);
-    // dayjs.extend(timezone);
-  }
-
   dateIsValid(number: number): boolean {
     return dayjs().isAfter(dayjs.unix(number));
   }

@@ -5,6 +5,7 @@ import { randomUUID } from 'crypto';
 import { resolve } from 'path';
 import { RefreshTokenRepository } from '@application/repositories/RefreshTokenRepository';
 import { UserRepository } from '@application/repositories/userRepository';
+import { SendMailProducerService } from 'src/infra/queue/jobs/sendMail.producer.service';
 
 @Injectable()
 export class SendForgotPasswordMailService {
@@ -12,14 +13,14 @@ export class SendForgotPasswordMailService {
     private userRepository: UserRepository,
     private tokenRepository: RefreshTokenRepository,
     private dateProvider: IDateProvider,
-    private mailProvider: IMailProvider,
+    private sendMailQueue: SendMailProducerService,
   ) {}
 
   async execute(email: string): Promise<void> {
     const user = await this.userRepository.findByEmail(email);
 
     if (!user) {
-      throw new HttpException('Email not found !', HttpStatus.BAD_REQUEST);
+      throw new HttpException('Email not found!', HttpStatus.BAD_REQUEST);
     }
 
     const token = randomUUID();
@@ -47,7 +48,7 @@ export class SendForgotPasswordMailService {
       link: `${process.env.FORGOT_MAIL_URL}${token}`,
     };
 
-    await this.mailProvider.sendMail({
+    await this.sendMailQueue.sendMail({
       to: email,
       path: templatePath,
       variables,

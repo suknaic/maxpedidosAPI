@@ -13,6 +13,18 @@ services:
       - POSTGRES_DB=dbdelivery
     volumes:
       - pgdata:/data/postgres
+  redisdb:
+    image: redis
+    container_name: Queue
+    restart: always
+    ports:
+      - 6379:6379
+      - 8001:8001
+    environment:
+      - REDIS_PASSSWORD=docker
+    command: /bin/sh -c "redis-server --requirepass $$REDIS_PASSSWORD"
+    volumes:
+      - ./redis:/data/redis
   # app:
   #   build: .
   #   container_name: appDelivery
@@ -23,7 +35,9 @@ services:
   #     - .:/usr/app
   #   depends_on:
   #     - database
+  #     - redisdb
   #   links:
+  #     - redisdb
   #     - database
 
 volumes:

@@ -8,9 +8,11 @@ import { providerModule } from '@shared/providers/providers.module';
 import { PasswordModule } from './controllers/password/password.module';
 import { EnderecoModule } from './controllers/endereco/endereco.module';
 import { CategoryModule } from './controllers/category/category.module';
+import { QueueModule } from '../queue/queue.module';
 
 @Module({
   imports: [
+    QueueModule,
     providerModule,
     authModule,
     PasswordModule,
