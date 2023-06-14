@@ -18,7 +18,7 @@ type IAuthenticateResponse = {
 export class AuthenticateService {
   constructor(
     private userRepository: UserRepository,
-    private refresTokenRepository: RefreshTokenRepository,
+    private refreshTokenRepository: RefreshTokenRepository,
     private jwtService: ITokensProvider,
   ) {}
 
@@ -26,40 +26,31 @@ export class AuthenticateService {
     email,
     password,
   }: IAuthenticateRequest): Promise<IAuthenticateResponse> {
-    // verifica e valida o usuário
     const user = await this.userRepository.findByEmail(email);
-
     if (!user) {
       throw new UnauthorizedException(
         'Ops, não encontramos seu email ou senha.',
       );
     }
-
     const passwordMatch = await compare(password, user.senha);
-
     if (!passwordMatch) {
       throw new UnauthorizedException(
         'Ops, não encontramos seu email ou senha.',
       );
     }
-
-    //cria o token de acesso
-
     const token = await this.jwtService.generateToken(user.id);
+    await this.refreshTokenRepository.deleteManyByUserId(user.id);
 
-    // cria o token de atualização
-    await this.refresTokenRepository.deleteManyByUserId(user.id);
-
-    const { usuarioId, refreshToken, expiresIn } =
+    const { expiresIn, refreshToken, usuarioId } =
       await this.jwtService.generateRefreshToken({
         email,
         usuarioId: user.id,
       });
 
-    await this.refresTokenRepository.create({
-      usuarioId,
-      refreshToken,
+    await this.refreshTokenRepository.create({
       expiresIn,
+      refreshToken,
+      usuarioId,
     });
 
     //retorna os tokens

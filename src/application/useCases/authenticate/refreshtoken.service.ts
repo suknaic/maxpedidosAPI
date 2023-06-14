@@ -37,10 +37,8 @@ export class RefreshTokenService {
       throw new UnauthorizedException('token Expired');
     }
 
-    // cria o token de acesso
     const token = await this.jwtService.generateToken(sub);
 
-    //cria o token de atualização
     await this.tokenRepository.deleteById(userRefreshToken.id);
 
     const { usuarioId, refreshToken, expiresIn } =
@@ -51,8 +49,6 @@ export class RefreshTokenService {
       refreshToken,
       expiresIn,
     });
-
-    // retorna os tokens
     return { token, refreshToken };
   }
 }

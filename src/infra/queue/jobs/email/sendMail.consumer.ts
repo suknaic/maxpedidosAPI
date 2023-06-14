@@ -1,5 +1,4 @@
 import { Process, Processor } from '@nestjs/bull';
-import { Injectable } from '@nestjs/common';
 import {
   IMailProvider,
   IMailProviderRequest,
@@ -11,7 +10,7 @@ export class SendMailConsumer {
   constructor(private mailService: IMailProvider) {}
 
   @Process('sendMailJob')
-  async sendMailJob({ data }: Job<IMailProviderRequest>) {
+  async function({ data }: Job<IMailProviderRequest>) {
     await this.mailService.sendMail(data);
   }
 }

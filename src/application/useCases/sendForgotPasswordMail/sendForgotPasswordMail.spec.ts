@@ -6,28 +6,28 @@ import { MailProviderMock } from '@shared/providers/MailProvider/mock/MailProvid
 import { User } from '@application/entities/User';
 import { HttpException } from '@nestjs/common';
 import * as crypto from 'crypto';
+import { IMailQueue } from 'src/infra/queue/jobs/email/IMailQueue';
 
 describe('[SendForgotPasswordMailService]', () => {
   let sendForgotPasswordMailService: SendForgotPasswordMailService;
-
   let userRepository: UserRepositoryInMemory;
   let tokenRepository: RefreshTokenRepositoryInMemory;
 
   let dateProvider: DateProviderMock;
-  let mailProvider: MailProviderMock;
+  let mailQueue: IMailQueue;
 
   beforeEach(() => {
     userRepository = new UserRepositoryInMemory();
     tokenRepository = new RefreshTokenRepositoryInMemory();
 
     dateProvider = new DateProviderMock();
-    mailProvider = new MailProviderMock();
+    mailQueue = new MailProviderMock();
 
     sendForgotPasswordMailService = new SendForgotPasswordMailService(
       userRepository,
       tokenRepository,
       dateProvider,
-      mailProvider,
+      mailQueue,
     );
 
     const userTest = new User({
@@ -39,7 +39,7 @@ describe('[SendForgotPasswordMailService]', () => {
     userRepository.repository.push(userTest);
   });
 
-  it('should be able to send mail for recuve password', () => {
+  it('should be able to send mail for retrieve password', () => {
     expect(async () =>
       sendForgotPasswordMailService.execute('test@email.com'),
     ).toBeTruthy();
@@ -59,7 +59,7 @@ describe('[SendForgotPasswordMailService]', () => {
   });
 
   it('should trigger sendMail function', async () => {
-    const senMailSpy = jest.spyOn(mailProvider, 'sendMail');
+    const senMailSpy = jest.spyOn(mailQueue, 'sendMail');
     await sendForgotPasswordMailService.execute('test@email.com');
     expect(senMailSpy).toHaveBeenCalled();
   });
@@ -72,6 +72,6 @@ describe('[SendForgotPasswordMailService]', () => {
       error = e;
     }
     expect(error).toBeInstanceOf(HttpException);
-    expect(error.message).toBe('Email not found !');
+    expect(error.message).toBe('Email not found!');
   });
 });

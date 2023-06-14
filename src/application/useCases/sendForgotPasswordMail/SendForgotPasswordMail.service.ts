@@ -1,11 +1,10 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { IDateProvider } from '@shared/providers/DateProvider/model/IDateProvider';
-import { IMailProvider } from '@shared/providers/MailProvider/model/IMailProvider';
 import { randomUUID } from 'crypto';
 import { resolve } from 'path';
 import { RefreshTokenRepository } from '@application/repositories/RefreshTokenRepository';
 import { UserRepository } from '@application/repositories/userRepository';
-import { SendMailProducerService } from 'src/infra/queue/jobs/sendMail.producer.service';
+import { IMailQueue } from '../../../infra/queue/jobs/email/IMailQueue';
 
 @Injectable()
 export class SendForgotPasswordMailService {
@@ -13,7 +12,7 @@ export class SendForgotPasswordMailService {
     private userRepository: UserRepository,
     private tokenRepository: RefreshTokenRepository,
     private dateProvider: IDateProvider,
-    private sendMailQueue: SendMailProducerService,
+    private mailProvider: IMailQueue,
   ) {}
 
   async execute(email: string): Promise<void> {
@@ -48,7 +47,7 @@ export class SendForgotPasswordMailService {
       link: `${process.env.FORGOT_MAIL_URL}${token}`,
     };
 
-    await this.sendMailQueue.sendMail({
+    await this.mailProvider.sendMail({
       to: email,
       path: templatePath,
       variables,

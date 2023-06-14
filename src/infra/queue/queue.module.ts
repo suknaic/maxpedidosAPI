@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { BullModule } from '@nestjs/bull';
-import { SendMailProducerService } from './jobs/sendMail.producer.service';
-import { SendMailConsumer } from './jobs/sendMail.consumer';
+import { SendMailProducerService } from './jobs/email/sendMail.producer.service';
+import { SendMailConsumer } from './jobs/email/sendMail.consumer';
 import { providerModule } from '@shared/providers/providers.module';
+import { IMailQueue } from './jobs/email/IMailQueue';
 @Module({
   imports: [
     BullModule.forRoot({
@@ -17,7 +18,13 @@ import { providerModule } from '@shared/providers/providers.module';
     }),
     providerModule,
   ],
-  providers: [SendMailProducerService, SendMailConsumer],
-  exports: [SendMailProducerService],
+  providers: [
+    {
+      provide: IMailQueue,
+      useClass: SendMailProducerService,
+    },
+    SendMailConsumer,
+  ],
+  exports: [IMailQueue],
 })
 export class QueueModule {}
