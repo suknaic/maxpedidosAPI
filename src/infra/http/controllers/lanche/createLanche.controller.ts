@@ -1,8 +1,16 @@
-import { Body, Controller, Post, Req } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Post,
+  Req,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { CreateCardapioService } from '@usecases/cardapio/createCardapio.service';
 import { CreateLancheService } from '@usecases/lanche/createLanche.service';
 import { Request } from 'express';
 import { lancheDTO } from '../../dtos/lancheDTO';
-import { CreateCardapioService } from '@usecases/cardapio/createCardapio.service';
 
 @Controller()
 export class CreateLancheController {
@@ -11,24 +19,26 @@ export class CreateLancheController {
     private cardapioService: CreateCardapioService,
   ) {}
 
-  @Post('/cadastro/lanche')
+  @Post('cadastro/lanche')
+  @UseInterceptors(FileInterceptor('logo'))
   async create(
     @Req() { user }: Request,
     @Body()
-    { logo = null, nome, horaAbre, horaFecha, diasAbre, contato }: lancheDTO,
+    { nome, horaAbre, horaFecha, diasAbre, contato }: lancheDTO,
+    @UploadedFile() logo: Express.Multer.File,
   ) {
     const { id } = user;
+    console.log(logo);
+    console.log({ nome, horaAbre, horaFecha, diasAbre, contato });
+    // const { lanche } = await this.lancheService.execute({
+    //   nome,
+    //   contato,
+    //   horaAbre,
+    //   horaFecha,
+    //   diasAbre,
+    //   usuarioId: id,
+    // });
 
-    const { lanche } = await this.lancheService.execute({
-      logo,
-      nome,
-      contato,
-      horaAbre,
-      horaFecha,
-      diasAbre,
-      usuarioId: id,
-    });
-
-    await this.cardapioService.execute(lanche.id);
+    // await this.cardapioService.execute(lanche.id);
   }
 }

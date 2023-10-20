@@ -1,7 +1,7 @@
 import { Body, Controller, Post, Req } from '@nestjs/common';
 import { CreateEnderecoService } from '@usecases/endereco/createEndereco.service';
-import { EnderecoDTO } from '../../dtos/enderecoDTO';
 import { Request } from 'express';
+import { EnderecoDTO } from '../../dtos/enderecoDTO';
 
 @Controller()
 export class EnderecoController {
